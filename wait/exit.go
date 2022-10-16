@@ -18,7 +18,7 @@ type ExitStrategy struct {
 	PollInterval time.Duration
 }
 
-//NewExitStrategy constructs with polling interval of 100 milliseconds without timeout by default
+// NewExitStrategy constructs with polling interval of 100 milliseconds without timeout by default
 func NewExitStrategy() *ExitStrategy {
 	return &ExitStrategy{
 		PollInterval: defaultPollInterval(),
@@ -46,8 +46,9 @@ func (ws *ExitStrategy) WithPollInterval(pollInterval time.Duration) *ExitStrate
 //
 // For Example:
 // wait.
-//     ForExit().
-//     WithPollInterval(1 * time.Second)
+//
+//	ForExit().
+//	WithPollInterval(1 * time.Second)
 func ForExit() *ExitStrategy {
 	return NewExitStrategy()
 }

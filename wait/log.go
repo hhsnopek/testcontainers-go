@@ -61,8 +61,9 @@ func (ws *LogStrategy) WithOccurrence(o int) *LogStrategy {
 //
 // For Example:
 // wait.
-//     ForLog("some text").
-//     WithPollInterval(1 * time.Second)
+//
+//	ForLog("some text").
+//	WithPollInterval(1 * time.Second)
 func ForLog(log string) *LogStrategy {
 	return NewLogStrategy(log)
 }
