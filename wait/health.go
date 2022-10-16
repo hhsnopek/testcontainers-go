@@ -46,8 +46,9 @@ func (ws *HealthStrategy) WithPollInterval(pollInterval time.Duration) *HealthSt
 //
 // For Example:
 // wait.
-//     ForHealthCheck().
-//     WithPollInterval(1 * time.Second)
+//
+//	ForHealthCheck().
+//	WithPollInterval(1 * time.Second)
 func ForHealthCheck() *HealthStrategy {
 	return NewHealthStrategy()
 }
