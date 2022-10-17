@@ -100,7 +100,6 @@ func TestParallelContainers(t *testing.T) {
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			res, err := ParallelContainers(context.Background(), tc.reqs, ParallelContainersOptions{})
-
 			if err != nil {
 				require.NotZero(t, tc.expErrors)
 				e, _ := err.(ParallelContainersError)
@@ -111,7 +110,10 @@ func TestParallelContainers(t *testing.T) {
 			}
 
 			for _, c := range res {
-				defer c.Terminate(context.Background())
+				c := c
+				t.Cleanup(func() {
+					_ = c.Terminate(context.Background())
+				})
 			}
 
 			if len(res) != tc.resLen {

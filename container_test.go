@@ -279,7 +279,7 @@ func Test_BuildImageWithContexts(t *testing.T) {
 			} else if err != nil {
 				t.Fatal(err)
 			} else {
-				c.Terminate(ctx)
+				_ = c.Terminate(ctx)
 			}
 		})
 	}
@@ -301,7 +301,7 @@ func Test_GetLogsFromFailedContainer(t *testing.T) {
 	if err != nil && !errors.Is(err, context.DeadlineExceeded) {
 		t.Fatal(err)
 	} else if err == nil {
-		c.Terminate(ctx)
+		_ = c.Terminate(ctx)
 		t.Fatal("was expecting error starting container")
 	}
 
@@ -352,7 +352,7 @@ func createTestContainer(t *testing.T, ctx context.Context) int {
 	}
 
 	t.Cleanup(func() {
-		container.Terminate(context.Background())
+		_ = container.Terminate(context.Background())
 	})
 
 	return port.Int()
