@@ -122,8 +122,14 @@ func (r *Reaper) Connect() (chan bool, error) {
 		for retryLimit > 0 {
 			retryLimit--
 
-			sock.WriteString(strings.Join(labelFilters, "&"))
-			sock.WriteString("\n")
+			if _, err := sock.WriteString(strings.Join(labelFilters, "&")); err != nil {
+				continue
+			}
+
+			if _, err := sock.WriteString("\n"); err != nil {
+				continue
+			}
+
 			if err := sock.Flush(); err != nil {
 				continue
 			}
@@ -132,6 +138,7 @@ func (r *Reaper) Connect() (chan bool, error) {
 			if err != nil {
 				continue
 			}
+
 			if resp == "ACK\n" {
 				break
 			}

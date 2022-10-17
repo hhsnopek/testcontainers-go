@@ -45,7 +45,7 @@ func TestContainerWithWaitForSQL(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer container.Terminate(ctx)
+		CleanupContainer(t, ctx, container)
 	})
 	t.Run("custom query", func(t *testing.T) {
 		req := ContainerRequest{
@@ -65,7 +65,7 @@ func TestContainerWithWaitForSQL(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		defer container.Terminate(ctx)
+		CleanupContainer(t, ctx, container)
 	})
 	t.Run("custom bad query", func(t *testing.T) {
 		req := ContainerRequest{
@@ -85,6 +85,6 @@ func TestContainerWithWaitForSQL(t *testing.T) {
 			t.Fatal("expected error, but got a nil")
 		}
 
-		defer container.Terminate(ctx)
+		CleanupContainer(t, ctx, container)
 	})
 }
