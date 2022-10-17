@@ -5,9 +5,6 @@ import (
 	"time"
 )
 
-// Implement interface
-var _ Strategy = (*HealthStrategy)(nil)
-
 // HealthStrategy will wait until the container becomes healthy
 type HealthStrategy struct {
 	// all Strategies should have a startupTimeout to avoid waiting infinitely

@@ -6,9 +6,6 @@ import (
 	"time"
 )
 
-// Implement interface
-var _ Strategy = (*ExitStrategy)(nil)
-
 // ExitStrategy will wait until container exit
 type ExitStrategy struct {
 	// all Strategies should have a timeout to avoid waiting infinitely

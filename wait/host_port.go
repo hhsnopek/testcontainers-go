@@ -12,9 +12,6 @@ import (
 	"github.com/docker/go-connections/nat"
 )
 
-// Implement interface
-var _ Strategy = (*HostPortStrategy)(nil)
-
 type HostPortStrategy struct {
 	// Port is a string containing port number and protocol in the format "80/tcp"
 	// which

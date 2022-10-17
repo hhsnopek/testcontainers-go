@@ -7,9 +7,6 @@ import (
 	"time"
 )
 
-// Implement interface
-var _ Strategy = (*LogStrategy)(nil)
-
 // LogStrategy will wait until a given log entry shows up in the docker logs
 type LogStrategy struct {
 	// all Strategies should have a startupTimeout to avoid waiting infinitely
