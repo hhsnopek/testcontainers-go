@@ -9,7 +9,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/url"
 	"os"
 	"os/exec"
@@ -535,7 +534,7 @@ func (c *DockerContainer) CopyFileToContainer(ctx context.Context, hostFilePath 
 		return c.CopyDirToContainer(ctx, hostFilePath, containerFilePath, fileMode)
 	}
 
-	fileContent, err := ioutil.ReadFile(hostFilePath)
+	fileContent, err := os.ReadFile(hostFilePath)
 	if err != nil {
 		return err
 	}
@@ -1217,7 +1216,7 @@ func (p *DockerProvider) attemptToPullImage(ctx context.Context, tag string, pul
 	defer pull.Close()
 
 	// download of docker image finishes at EOF of the pull request
-	_, err = ioutil.ReadAll(pull)
+	_, err = io.ReadAll(pull)
 	return err
 }
 

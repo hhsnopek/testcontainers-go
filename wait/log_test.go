@@ -3,7 +3,7 @@ package wait
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"testing"
 	"time"
 
@@ -12,7 +12,7 @@ import (
 
 func TestWaitForLog(t *testing.T) {
 	target := waittest.NopStrategyTarget{
-		ReaderCloser: ioutil.NopCloser(bytes.NewReader([]byte("docker"))),
+		ReaderCloser: io.NopCloser(bytes.NewReader([]byte("docker"))),
 	}
 	wg := NewLogStrategy("docker").WithStartupTimeout(100 * time.Microsecond)
 	err := wg.WaitUntilReady(context.Background(), target)
@@ -23,7 +23,7 @@ func TestWaitForLog(t *testing.T) {
 
 func TestWaitWithExactNumberOfOccurrences(t *testing.T) {
 	target := waittest.NopStrategyTarget{
-		ReaderCloser: ioutil.NopCloser(bytes.NewReader([]byte("kubernetes\r\ndocker\n\rdocker"))),
+		ReaderCloser: io.NopCloser(bytes.NewReader([]byte("kubernetes\r\ndocker\n\rdocker"))),
 	}
 	wg := NewLogStrategy("docker").
 		WithStartupTimeout(100 * time.Microsecond).
@@ -36,7 +36,7 @@ func TestWaitWithExactNumberOfOccurrences(t *testing.T) {
 
 func TestWaitWithExactNumberOfOccurrencesButItWillNeverHappen(t *testing.T) {
 	target := waittest.NopStrategyTarget{
-		ReaderCloser: ioutil.NopCloser(bytes.NewReader([]byte("kubernetes\r\ndocker"))),
+		ReaderCloser: io.NopCloser(bytes.NewReader([]byte("kubernetes\r\ndocker"))),
 	}
 	wg := NewLogStrategy("containerd").
 		WithStartupTimeout(100 * time.Microsecond).
@@ -49,7 +49,7 @@ func TestWaitWithExactNumberOfOccurrencesButItWillNeverHappen(t *testing.T) {
 
 func TestWaitShouldFailWithExactNumberOfOccurrences(t *testing.T) {
 	target := waittest.NopStrategyTarget{
-		ReaderCloser: ioutil.NopCloser(bytes.NewReader([]byte("kubernetes\r\ndocker"))),
+		ReaderCloser: io.NopCloser(bytes.NewReader([]byte("kubernetes\r\ndocker"))),
 	}
 	wg := NewLogStrategy("docker").
 		WithStartupTimeout(100 * time.Microsecond).
