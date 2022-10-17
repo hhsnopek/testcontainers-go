@@ -6,9 +6,6 @@ import (
 	"time"
 )
 
-// Implement interface
-var _ Strategy = (*MultiStrategy)(nil)
-
 type MultiStrategy struct {
 	// all Strategies should have a startupTimeout to avoid waiting infinitely
 	startupTimeout time.Duration

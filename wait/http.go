@@ -16,9 +16,6 @@ import (
 	"github.com/docker/go-connections/nat"
 )
 
-// Implement interface
-var _ Strategy = (*HTTPStrategy)(nil)
-
 type HTTPStrategy struct {
 	// all Strategies should have a startupTimeout to avoid waiting infinitely
 	startupTimeout time.Duration
