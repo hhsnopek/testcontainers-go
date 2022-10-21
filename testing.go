@@ -20,3 +20,18 @@ func SkipIfProviderIsNotHealthy(t *testing.T) {
 		t.Skipf("Docker is not running. TestContainers can't perform is work without it: %s", err)
 	}
 }
+
+// CleanupContainer terminates the passed container after testing.TB has
+// ended.
+func CleanupContainer(tb testing.TB, ctx context.Context, ctr Container) {
+	tb.Helper()
+	if ctr == nil {
+		return
+	}
+
+	tb.Cleanup(func() {
+		if err := ctr.Terminate(ctx); err != nil {
+			tb.Fatalf("failed to terminate container: %s", err)
+		}
+	})
+}
