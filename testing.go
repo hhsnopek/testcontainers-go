@@ -37,7 +37,7 @@ func CleanupContainer(tb testing.TB, ctx context.Context, ctr Container) {
 
 	tb.Cleanup(func() {
 		if err := ctr.Terminate(ctx); err != nil {
-			tb.Fatalf("failed to terminate container: %s", err)
+			tb.Logf("failed to terminate container: %s", err)
 		}
 	})
 }
