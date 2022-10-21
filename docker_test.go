@@ -629,11 +629,16 @@ func TestContainerTerminationRemovesDockerImage(t *testing.T) {
 		}
 		imageID := resp.Config.Image
 
-		CleanupContainer(t, ctx, container)
+		err = container.Terminate(ctx)
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		_, _, err = client.ImageInspectWithRaw(ctx, imageID)
 		if err == nil {
-			t.Fatal("custom built image should have been removed")
+			t.Fatal("custom built image should have been removed", err)
+		} else {
+			t.Fatalf("unexpected error: %s", err)
 		}
 	})
 }
