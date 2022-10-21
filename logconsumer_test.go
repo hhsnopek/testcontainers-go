@@ -208,7 +208,7 @@ func TestContainerLogWithErrClosed(t *testing.T) {
 	})
 
 	require.NoError(t, err)
-	terminateContainerOnEnd(t, ctx, dind)
+	CleanupContainer(t, ctx, dind)
 
 	var remoteDocker string
 
