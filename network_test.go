@@ -3,6 +3,7 @@ package testcontainers
 import (
 	"context"
 	"fmt"
+	"log"
 	"testing"
 	"time"
 
@@ -37,7 +38,11 @@ func ExampleNetworkProvider_CreateNetwork() {
 			},
 		},
 	})
-	CleanupContainer(t, ctx, nginxC)
+	defer func() {
+		if err := nginxC.Terminate(ctx); err != nil {
+			log.Fatalf("failed to terminate container: %s", err)
+		}
+	}()
 
 	nginxC.GetContainerID()
 }

@@ -23,6 +23,9 @@ on test completion.
     is as soon as you call `testcontainers.GenericContainer` but remember to
     check for the `err` first.
 
+Optionally you may use `testcontainers.CleanupContainer(tb testing.TB, context.Context, ctr testcontainers.Container)`
+helper to terminate your running Container in a test environment.
+
 ## Ryuk
 
 [Ryuk](https://github.com/testcontainers/moby-ryuk) (also referred to as

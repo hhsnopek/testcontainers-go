@@ -68,7 +68,7 @@ func TestIntegrationNginxLatestReturn(t *testing.T) {
 	}
 
 	// Clean up the container after the test is complete
-	defer nginxC.Terminate(ctx)
+	CleanupContainer(t, ctx, nginxC)
 
 	resp, err := http.Get(nginxC.URI)
 	if resp.StatusCode != http.StatusOK {
@@ -79,6 +79,8 @@ func TestIntegrationNginxLatestReturn(t *testing.T) {
 
 Cleaning up your environment after test completion should be accomplished by deferring the container termination, e.g
 `defer nginxC.Terminate(ctx)`. Reaper (Ryuk) is also enabled by default to help clean up.
+Optionally, you may use `testcontainers.CleanupContainer(t, ctx, nginxC)` when
+running in a test environment.
 
 ## Documentation
 

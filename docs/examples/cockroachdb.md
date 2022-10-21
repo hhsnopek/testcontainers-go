@@ -94,7 +94,7 @@ func TestIntegrationDBInsertSelect(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer cdbContainer.Terminate(ctx)
+    testcontainers.CleanupContainer(t, ctx, cdbContainer)
 
 	db, err := sql.Open("pgx", cdbContainer.URI+"/projectmanagement")
 	if err != nil {
