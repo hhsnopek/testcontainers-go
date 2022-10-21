@@ -47,21 +47,18 @@ func ExampleHTTPStrategy() {
 func TestHTTPStrategyWaitUntilReady(t *testing.T) {
 	workdir, err := os.Getwd()
 	if err != nil {
-		t.Error(err)
-		return
+		t.Fatal(err)
 	}
 
 	capath := workdir + "/testdata/root.pem"
 	cafile, err := os.ReadFile(capath)
 	if err != nil {
-		t.Errorf("can't load ca file: %v", err)
-		return
+		t.Fatalf("can't load ca file: %v", err)
 	}
 
 	certpool := x509.NewCertPool()
 	if !certpool.AppendCertsFromPEM(cafile) {
-		t.Errorf("the ca file isn't valid")
-		return
+		t.Fatalf("the ca file isn't valid")
 	}
 
 	tlsconfig := &tls.Config{RootCAs: certpool, ServerName: "testcontainer.go.test"}
@@ -87,20 +84,17 @@ func TestHTTPStrategyWaitUntilReady(t *testing.T) {
 	ctx := context.Background()
 	container, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{ContainerRequest: dockerReq, Started: true})
 	if err != nil {
-		t.Error(err)
-		return
+		t.Fatal(err)
 	}
 	testcontainers.CleanupContainer(t, ctx, container)
 
 	host, err := container.Host(ctx)
 	if err != nil {
-		t.Error(err)
-		return
+		t.Fatal(err)
 	}
 	port, err := container.MappedPort(ctx, "6443/tcp")
 	if err != nil {
-		t.Error(err)
-		return
+		t.Fatal(err)
 	}
 	client := http.Client{
 		Transport: &http.Transport{
@@ -120,12 +114,10 @@ func TestHTTPStrategyWaitUntilReady(t *testing.T) {
 	}
 	resp, err := client.Get(fmt.Sprintf("https://%s:%s", host, port.Port()))
 	if err != nil {
-		t.Error(err)
-		return
+		t.Fatal(err)
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
-		t.Errorf("status code isn't ok: %s", resp.Status)
-		return
+		t.Fatalf("status code isn't ok: %s", resp.Status)
 	}
 }
