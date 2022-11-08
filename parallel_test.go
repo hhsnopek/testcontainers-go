@@ -114,7 +114,7 @@ func TestParallelContainers(t *testing.T) {
 
 			for _, c := range res {
 				c := c
-				terminateContainerOnEnd(t, context.Background(), c)
+				Cleanup(t, context.Background(), c)
 			}
 
 			if len(res) != tc.resLen {
@@ -168,6 +168,6 @@ func TestParallelContainersWithReuse(t *testing.T) {
 
 	for _, c := range res {
 		c := c
-		terminateContainerOnEnd(t, ctx, c)
+		Cleanup(t, ctx, c)
 	}
 }
