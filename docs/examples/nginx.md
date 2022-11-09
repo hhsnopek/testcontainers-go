@@ -60,7 +60,7 @@ func TestIntegrationNginxLatestReturn(t *testing.T) {
 	}
 
 	// Clean up the container after the test is complete
-    testcontainers.Cleanup(t, ctx, nginxC)
+	testcontainers.Cleanup(t, ctx, cbdContainer)
 
 	resp, err := http.Get(nginxC.URI)
 	if resp.StatusCode != http.StatusOK {

@@ -35,11 +35,7 @@ func TestWithRedis(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	defer func() {
-		if err := redisC.terminate(ctx); err != nil {
-			t.Fatalf("failed to terminate container: %w", err)
-		}
-	}()
+	testcontainers.Cleanup(t, ctx, redisC)
 }
 ```
 
@@ -71,7 +67,7 @@ start, leaving to you the decision about when to start it.
 All the containers must be removed at some point, otherwise they will run until
 the host is overloaded. One of the ways we have to clean up is by deferring the
 terminated function: `defer redisC.Terminate(ctx)`. Optionally you may use
-terminate a container with the helper `tescontainers.CleaupContainer(t, ctx, redisC)`.
+terminate a container with the helper `tescontainers.Cleanup(t, ctx, redisC)`.
 
 !!!tip
 

@@ -64,7 +64,7 @@ func TestIntegrationSetGet(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer redisContainer.Terminate(ctx)
+	testcontainers.Cleanup(t, ctx, redisContainer)
 
 	// You will likely want to wrap your Redis package of choice in an
 	// interface to aid in unit testing and limit lock-in throughtout your
